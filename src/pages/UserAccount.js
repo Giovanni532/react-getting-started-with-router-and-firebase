@@ -3,6 +3,6 @@ import UserData from '../components/UserData'
 
 export default class UserAccount extends React.Component {
     render() {
-        return <UserData/>
+        return <UserData />
     }
-}
+}        

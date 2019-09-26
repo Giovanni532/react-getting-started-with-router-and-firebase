@@ -63,9 +63,10 @@ export default class UserData extends React.Component {
         firebase.database().ref('user/' + uid).update({
             firstName: this.state.firstName,
             lastName: this.state.lastName,
-            loaded: false
         })
-        this.setState({ edited: true })
+        this.setState({
+            edited: true, loaded: false
+        })
     }
 
     handleChange(event) {
