@@ -29,7 +29,9 @@ export default class Signup extends React.Component {
                     const uid = firebase.auth().currentUser.uid
                     if (uid) {
                         firebase.database().ref('user/' + uid).set({
-                            email: this.state.email
+                            email: this.state.email,
+                            firstName: "",
+                            lastName: "",
                         })
                     }
                     this.setState({ redirect: true })
