@@ -1,0 +1,43 @@
+.button {
+    margin-top: 20px;
+    width: 100px;
+    border-radius: 25px;
+    border: 1px solid #000;
+    background-color: #fff;
+    color: #000;
+    outline: none;
+    transition: 0.5s;
+}
+
+.button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.button:active {
+    background-color: #fff;
+    color: #000;
+}
+
+.button-logout {
+    margin-top: 20px;
+    padding: 5px;
+    border-radius: 25px;
+    border: 1px solid #000;
+    background-color: #fff;
+    color: #000;
+    outline: none;
+    transition: 0.5s;
+}
+
+.button-logout:hover {
+    background-color: #000;
+    color: #fff;
+    outline: none;
+}
+
+.button-logout:active {
+    background-color: #fff;
+    color: #000;
+    outline: none;
+}

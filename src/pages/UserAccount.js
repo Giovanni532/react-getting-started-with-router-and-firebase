@@ -27,7 +27,7 @@ export default class UserAccount extends React.Component {
         return (
             <div>
                 <p>UserAccount</p>
-                <button onClick={this.signOut.bind(this)}>deconnexion</button>
+                <button className="button-logout" onClick={this.signOut.bind(this)}>deconnexion</button>
             </div>
         )
     }

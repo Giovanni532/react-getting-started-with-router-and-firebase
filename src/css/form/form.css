@@ -1,0 +1,54 @@
+.parent-form {
+    margin-top: 100px !important; 
+    margin: 0 auto;
+    border-radius: 10px;
+    border: 1px #000 solid;
+    width: 400px;
+}
+
+.title {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.input {
+    text-align: center;
+    background-color: transparent;
+    border-radius: 0;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-decoration: none;
+    border-bottom: #000 1px solid;
+    width: 200px;
+    transition: 0.5s;
+}
+
+.input:focus {
+    text-decoration: none !important;
+    width: 250px;
+    outline: none;
+}
+
+.label {
+    margin-top: 10px;
+    margin-bottom: -2px;
+}
+
+.link {
+    color: #000;
+    text-decoration: none;
+    border-bottom: #000 1px solid;
+}
+
+.error {
+    text-align: center;
+    padding: 10px;
+}

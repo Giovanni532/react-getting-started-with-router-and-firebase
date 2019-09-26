@@ -1,5 +1,6 @@
 import React from 'react';
 import './css/App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import firebase from 'firebase'
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { PrivateRoute } from './helpers/PrivateRoute'

@@ -20,30 +20,16 @@ export default class NavbarLogin extends React.Component {
     render() {
         return (
             this.state.logged ?
-                <div>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/user">user</Link>
-                        </li>
-                    </ul>
-                </div>
+                <nav className="navbar fixed-top navbar-light bg-light">
+                    <Link className="navbar-brand" to="/">Home</Link>
+                    <Link className="navbar-brand" to="/user">user</Link>
+                </nav>
                 :
-                <div>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                    </ul>
-                    <li>
-                        <Link to="/login">Login</Link>
-                    </li>
-                    <li>
-                        <Link to="/signup">Signup</Link>
-                    </li>
-                </div>
+                <nav className="navbar fixed-top navbar-light bg-light">
+                    <Link className="navbar-brand" to="/">Home</Link>
+                    <Link className="navbar-brand" to="/login">Login</Link>
+                    <Link className="navbar-brand" to="/signup">Signup</Link>
+                </nav>
         )
     }
 }
