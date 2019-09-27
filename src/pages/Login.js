@@ -1,5 +1,5 @@
 import React from 'react'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
 import { Redirect, Link } from 'react-router-dom'
 import LoaderCircle from '../loaders/LoaderCircle'
 

@@ -1,7 +1,10 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
 import { Redirect } from 'react-router-dom'
-import LoaderCircle from '../loaders/LoaderCircle'
+import LoaderCircle from '../../loaders/LoaderCircle'
+import FileUploader from 'react-firebase-file-uploader'
+import image from '../../assets/userprofile.png'
 
 export default class UserData extends React.Component {
     constructor(props) {
@@ -11,43 +14,43 @@ export default class UserData extends React.Component {
             email: "",
             firstName: "",
             lastName: "",
-            notifications: "",
             edited: true,
             redirect: false,
-            loaded: false
+            loaded: false,
+            image: "",
+            imageUrl: image,
+            progress: 0,
+            uid: firebase.auth().currentUser.uid
         }
 
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    componentWillMount() {
-        const uid = firebase.auth().currentUser.uid
-        firebase.database().ref('user/' + uid).on('value', (snapshot) => {
+
+    fetchUserData = async () => {
+        firebase.storage().ref('avatars/' + this.state.uid).list().then(filename => {
+            if (filename.items.length !== 0) {
+                this.setState({image: filename.items[0].name})
+                firebase.storage().ref('avatars/' + this.state.uid + '/' + this.state.image).getDownloadURL()
+                .then(url => {
+                    this.setState({imageUrl: url})
+                })
+            }
+        })
+
+        firebase.database().ref('user/' + this.state.uid).on('value', (snapshot) => {
             let user = snapshot.val()
             this.setState({
                 email: firebase.auth().currentUser.email,
                 firstName: user['firstName'],
                 lastName: user['lastName']
             })
-            if (this.state.firstName.length === 0 && this.state.lastName.length === 0) {
-                this.setState({
-                    notifications: "Veuillez ajoutez votre nom et prenom"
-                })
-            } else if (this.state.firstName.length === 0) {
-                this.setState({
-                    notifications: "Veuillez ajoutez votre prenom"
-                })
-            } else if (this.state.lastName.length === 0) {
-                this.setState({
-                    notifications: "Veuillez ajoutez votre nom"
-                })
-            } else {
-                this.setState({
-                    notifications: ""
-                })
-            }
         })
+    }
+
+    UNSAFE_componentWillMount() {
+        this.fetchUserData()
     }
 
     signOut = () => {
@@ -59,8 +62,7 @@ export default class UserData extends React.Component {
 
     updateData = () => {
         this.setState({ loaded: true })
-        const uid = firebase.auth().currentUser.uid
-        firebase.database().ref('user/' + uid).update({
+        firebase.database().ref('user/' + this.state.uid).update({
             firstName: this.state.firstName,
             lastName: this.state.lastName,
         })
@@ -76,6 +78,23 @@ export default class UserData extends React.Component {
         this.setState({
             [name]: value
         })
+    }
+
+
+    handleUploadStart = () => {
+        this.setState({progress: 0})
+    }
+
+    handleUploadSucces = filename => {
+        this.setState({
+            image: filename,
+            progress: 100
+        })
+
+        firebase.storage().ref('avatars/' + this.state.uid).child(filename).getDownloadURL()
+        .then(url => this.setState({
+            imageUrl: url
+        }))
     }
 
     handleSubmit(event) {
@@ -94,7 +113,7 @@ export default class UserData extends React.Component {
                 <div className="parent-form">
                     <div className="form">
                         <p style={{ marginTop: 10 }}>Information sur le compte</p>
-                        <p>{this.state.notifications}</p>
+                        <img className="image-profil" src={this.state.imageUrl}/>
                         <p>votre email : {this.state.email}</p>
                         <p>votre prenom : {this.state.firstName}</p>
                         <p>votre nom : {this.state.lastName}</p>
@@ -106,6 +125,13 @@ export default class UserData extends React.Component {
                 <div className="parent-form">
                     <h2 className="title">Votre compte</h2>
                     <form onSubmit={this.handleSubmit} className="form">
+                    <FileUploader 
+                    accept="image/*" 
+                    name="image"
+                    onUploadStart={this.handleUploadStart}
+                    storageRef={firebase.storage().ref('avatars/' + this.state.uid)}
+                    onUploadSuccess={this.handleUploadSucces}
+                     />
                         <label className="label">
                             prenom
                     </label>

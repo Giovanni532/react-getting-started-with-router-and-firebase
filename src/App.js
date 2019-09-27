@@ -1,14 +1,14 @@
 import React from 'react';
 import './css/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import firebase from 'firebase'
+import firebase from 'firebase/app'
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { PrivateRoute } from './helpers/PrivateRoute'
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NavbarLogin from './navbar/NavbarLogin';
-import UserAccount from './pages/UserAccount';
+import Profil from './pages/Profil';
 
 const configFirebase = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -30,7 +30,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <PrivateRoute path="/user" component={UserAccount} />
+        <PrivateRoute path="/user" component={Profil} />
       </div>
     </Router>
   );

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect, Route } from "react-router-dom";
-import firebase from 'firebase'
+import firebase from 'firebase/app'
 
 
 export const PrivateRoute = ({ component: Component, ...rest }) => {
