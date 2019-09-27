@@ -31,11 +31,11 @@ export default class UserData extends React.Component {
     fetchUserData = async () => {
         firebase.storage().ref('avatars/' + this.state.uid).list().then(filename => {
             if (filename.items.length !== 0) {
-                this.setState({image: filename.items[0].name})
+                this.setState({ image: filename.items[0].name })
                 firebase.storage().ref('avatars/' + this.state.uid + '/' + this.state.image).getDownloadURL()
-                .then(url => {
-                    this.setState({imageUrl: url})
-                })
+                    .then(url => {
+                        this.setState({ imageUrl: url })
+                    })
             }
         })
 
@@ -82,19 +82,23 @@ export default class UserData extends React.Component {
 
 
     handleUploadStart = () => {
-        this.setState({progress: 0})
+        this.setState({ progress: 0 })
     }
 
     handleUploadSucces = filename => {
-        this.setState({
-            image: filename,
-            progress: 100
-        })
+        let deleteImage = this.state.image
+        if (this.state.image !== filename) {
+            this.setState({
+                image: filename,
+                progress: 100
+            })
+            firebase.storage().ref('avatars/' + this.state.uid).child(deleteImage).delete()
+        }
 
         firebase.storage().ref('avatars/' + this.state.uid).child(filename).getDownloadURL()
-        .then(url => this.setState({
-            imageUrl: url
-        }))
+            .then(url => this.setState({
+                imageUrl: url
+            }))
     }
 
     handleSubmit(event) {
@@ -113,7 +117,7 @@ export default class UserData extends React.Component {
                 <div className="parent-form">
                     <div className="form">
                         <p style={{ marginTop: 10 }}>Information sur le compte</p>
-                        <img className="image-profil" src={this.state.imageUrl}/>
+                        <img className="image-profil" src={this.state.imageUrl} />
                         <p>votre email : {this.state.email}</p>
                         <p>votre prenom : {this.state.firstName}</p>
                         <p>votre nom : {this.state.lastName}</p>
@@ -125,13 +129,13 @@ export default class UserData extends React.Component {
                 <div className="parent-form">
                     <h2 className="title">Votre compte</h2>
                     <form onSubmit={this.handleSubmit} className="form">
-                    <FileUploader 
-                    accept="image/*" 
-                    name="image"
-                    onUploadStart={this.handleUploadStart}
-                    storageRef={firebase.storage().ref('avatars/' + this.state.uid)}
-                    onUploadSuccess={this.handleUploadSucces}
-                     />
+                        <FileUploader
+                            accept="image/*"
+                            name="image"
+                            onUploadStart={this.handleUploadStart}
+                            storageRef={firebase.storage().ref('avatars/' + this.state.uid)}
+                            onUploadSuccess={this.handleUploadSucces}
+                        />
                         <label className="label">
                             prenom
                     </label>
