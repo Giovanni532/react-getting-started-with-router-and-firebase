@@ -1,6 +1,6 @@
 ## This project use 
 
-### react, react-router, react-router-dom, firebase, react-dom and react-bootstrap
+### react, react-router, react-router-dom, firebase, react-dom and react-bootstrap, react-firebase-file-uploader
 
 ## Start Project
 
