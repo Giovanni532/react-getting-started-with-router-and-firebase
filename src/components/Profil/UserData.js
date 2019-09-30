@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom'
 import LoaderCircle from '../../loaders/LoaderCircle'
 import FileUploader from 'react-firebase-file-uploader'
 import image from '../../assets/userprofile.png'
-import ProgressBar from '../../helpers/progressBar'
+// import ProgressBar from '../../helpers/progressBar'
 
 export default class UserData extends React.Component {
     constructor(props) {
@@ -86,7 +86,7 @@ export default class UserData extends React.Component {
     }
 
     fileOnProgress = progress => {
-        this.setState({progress: progress})
+        this.setState({ progress: progress })
     }
 
     handleUploadSucces = filename => {
@@ -118,19 +118,19 @@ export default class UserData extends React.Component {
         }
         return (
             this.state.edited ?
-            <div>
-                <div className="parent-form">
-                    <div className="form">
-                        <p style={{ marginTop: 10 }}>Information sur le compte</p>
-                        <img className="image-profil" src={this.state.imageUrl} />
-                        <p>votre email : {this.state.email}</p>
-                        <p>votre prenom : {this.state.firstName}</p>
-                        <p>votre nom : {this.state.lastName}</p>
-                        <button className="button-logout" onClick={() => this.setState({ edited: false })}>Editez</button>
-                        <button style={{ marginBottom: 10 }} className="button-logout" onClick={this.signOut.bind(this)}>deconnexion</button>
+                <div>
+                    <div className="parent-form">
+                        <div className="form">
+                            <p style={{ marginTop: 10 }}>Information sur le compte</p>
+                            <img className="image-profil" src={this.state.imageUrl} />
+                            <p>votre email : {this.state.email}</p>
+                            <p>votre prenom : {this.state.firstName}</p>
+                            <p>votre nom : {this.state.lastName}</p>
+                            <button className="button-logout" onClick={() => this.setState({ edited: false })}>Editez</button>
+                            <button style={{ marginBottom: 10 }} className="button-logout" onClick={this.signOut.bind(this)}>deconnexion</button>
+                        </div>
                     </div>
                 </div>
-            </div>
                 :
                 <div className="parent-form">
                     <h2 className="title">Votre compte</h2>
@@ -143,7 +143,8 @@ export default class UserData extends React.Component {
                             onUploadSuccess={this.handleUploadSucces}
                             onProgress={this.fileOnProgress}
                         />
-                        {this.state.progress === 0 ? null : <ProgressBar progress={this.state.progress}/>}
+                        {/* remove this comment for progress bar in file upload */}
+                        {/* {this.state.progress === 0 ? null : <ProgressBar progress={this.state.progress} />} */}
                         <label className="label">
                             prenom
                     </label>
