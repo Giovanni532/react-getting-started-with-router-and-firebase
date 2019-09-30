@@ -1,5 +1,8 @@
 .image-profil {
-    width: 200px;
-    height: 200px;
-    border-radius: 25px;
+    overflow:hidden;
+    -webkit-border-radius:50px;
+    -moz-border-radius:50px;
+    border-radius:75px;
+    width:150px;
+    height:150px;
 }

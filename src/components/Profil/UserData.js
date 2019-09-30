@@ -5,13 +5,14 @@ import { Redirect } from 'react-router-dom'
 import LoaderCircle from '../../loaders/LoaderCircle'
 import FileUploader from 'react-firebase-file-uploader'
 import image from '../../assets/userprofile.png'
+import ProgressBar from '../../helpers/progressBar'
 
 export default class UserData extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            email: "",
+            email: firebase.auth().currentUser.email,
             firstName: "",
             lastName: "",
             edited: true,
@@ -42,7 +43,6 @@ export default class UserData extends React.Component {
         firebase.database().ref('user/' + this.state.uid).on('value', (snapshot) => {
             let user = snapshot.val()
             this.setState({
-                email: firebase.auth().currentUser.email,
                 firstName: user['firstName'],
                 lastName: user['lastName']
             })
@@ -85,6 +85,10 @@ export default class UserData extends React.Component {
         this.setState({ progress: 0 })
     }
 
+    fileOnProgress = progress => {
+        this.setState({progress: progress})
+    }
+
     handleUploadSucces = filename => {
         let deleteImage = this.state.image
         if (this.state.image !== filename) {
@@ -114,6 +118,7 @@ export default class UserData extends React.Component {
         }
         return (
             this.state.edited ?
+            <div>
                 <div className="parent-form">
                     <div className="form">
                         <p style={{ marginTop: 10 }}>Information sur le compte</p>
@@ -125,6 +130,7 @@ export default class UserData extends React.Component {
                         <button style={{ marginBottom: 10 }} className="button-logout" onClick={this.signOut.bind(this)}>deconnexion</button>
                     </div>
                 </div>
+            </div>
                 :
                 <div className="parent-form">
                     <h2 className="title">Votre compte</h2>
@@ -135,7 +141,9 @@ export default class UserData extends React.Component {
                             onUploadStart={this.handleUploadStart}
                             storageRef={firebase.storage().ref('avatars/' + this.state.uid)}
                             onUploadSuccess={this.handleUploadSucces}
+                            onProgress={this.fileOnProgress}
                         />
+                        {this.state.progress === 0 ? null : <ProgressBar progress={this.state.progress}/>}
                         <label className="label">
                             prenom
                     </label>
